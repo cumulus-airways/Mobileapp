@@ -1,0 +1,66 @@
+replicaCount: 1
+
+metadata:
+ name: ionic-app-air 
+ label: ionic-app-air
+
+hpa:
+  metadata:
+    name: ionic-app-airehpa
+  spec:
+    maxReplicas: 10
+    minReplicas: 1
+  metrics:
+    pods:
+      targetAverageValue: 50
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
+    memory:
+      targetAverageUtilization: 50
+  scaleTargetRef:  
+    name: ionic-app-air
+
+image:
+  name: ionic-app-air
+  imageName: "ionic-app-air" 
+  imagePullPolicy: Always
+  maxSurge: 1
+  maxUnavailable: 0
+  requests:
+    cpu: "400m"
+    memory: "800Mi"
+  limits:
+    cpu: "900m"
+    memory: "1000Mi"
+
+service:
+  serviceMetadata:
+    name: ionic-app-air
+  selector:
+    selectorName: ionic-app-air
+  servicePortConfiguration:
+    name: ionic-app-air
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+
+
+buildconfig:
+  uri: "https://github.com/cumulus-airways/Mobileapp.git"
+  branch: "master"
+  name: "ionic-app-air"
+  imagename: "ionic-app-air:latest"
+  secret1: $(head -c 24 /dev/random | base64)
+  secret2: $(head -c 24 /dev/random | base64)
+
+imagestream:
+  name:  ionic-app-air
+  label: ionic-app-air
+
+
+routes:
+  host: "ionic-app-air-kubeapp.apps.9.30.210.207.nip.io"
+  targetPort: 8080
+  name: ionic-app-air
+  weight: 100

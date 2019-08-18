@@ -1,0 +1,6 @@
+apiVersion: cumulusair.com/v1alpha1
+kind: CumulusAirIonic
+metadata:
+  name: ionicapp-air
+spec:
+  replicaCount: 1

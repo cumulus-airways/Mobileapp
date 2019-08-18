@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: cumulusairbank.com
+  kind: CumulusAirIonic
+  chart: /opt/helm/helm-charts/cumulusairionic
